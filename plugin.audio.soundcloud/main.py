@@ -26,10 +26,10 @@ def get_username():
     return username 
 
 def get_favorites(params):
-    username = get_username()
+    username = get_username()
     client = SoundCloudClient(username)
     tracks = client.get_favorites()
-    for track in tracks:
+    for track in tracks:
         artwork = track.get_artwork_url() if track.get_artwork_url() else ""
         li = ListItem(label=track.get_title())
         li.setInfo("music", { "title": track.get_title(), "genre": track.get_genre() })

@@ -8,8 +8,8 @@
 		<provides>audio</provides>
 	</extension>
 	<extension point="xbmc.addon.metadata">
-		<summary>Addon to allow access to Public data on Soundcloud.</summary>
-		<description>desc</description>
+		<summary>Addon to stream tracks from SoundCloud.</summary>
+		<description>Stream favourite tracks and public playlists from your SoundCloud account.</description>
 		<platform>all</platform>
 	</extension>
 </addon>
