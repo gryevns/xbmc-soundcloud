@@ -11,22 +11,14 @@ __icon__        = __addon__.getAddonInfo("icon")
 
 HANDLE      = int(sys.argv[1])
 URL         = sys.argv[0]
-BASE_URL    = "plugin://plugin.audio.soundcloud2"
+BASE_URL    = "plugin://plugin.audio.soundcloudstream"
 
 def get_menu(params):
     xbmcplugin.addDirectoryItem(handle=HANDLE, url=URL + "favorites/", listitem=ListItem("Likes"), isFolder=True)
     xbmcplugin.addDirectoryItem(handle=HANDLE, url=URL + "playlists/", listitem=ListItem("Playlists"), isFolder=True)
     xbmcplugin.endOfDirectory(handle=HANDLE, succeeded=True)
 
-def get_username():
-    username = xbmcplugin.getSetting(HANDLE, u"username")
-    if not username:
-        __addon__.openSettings()
-        return
-    return username 
-
 def get_favorites(params):
-    username = get_username()
     client = SoundCloudClient(username)
     tracks = client.get_favorites()
     for track in tracks:
@@ -48,6 +40,12 @@ patterns = [
     Pattern(r"^/playlists/$", None)
 ]
 
+# Require username
+username = xbmcplugin.getSetting(HANDLE, u"username")
+if not username:
+    __addon__.openSettings()
+
 page = URL[len(BASE_URL):]
 for pattern in patterns:
-    if pattern.match(page): break
+    if pattern.match(page):
+        break
