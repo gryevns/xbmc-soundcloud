@@ -1,5 +1,7 @@
 import urllib2
 import json
+from track import Track
+from playlist import Playlist
 
 class SoundCloudClient:
 	"""
@@ -25,7 +27,7 @@ class SoundCloudClient:
 		response = json.load(u)
 		tracks = []
 		for track in response:
-			tracks.append(Track(track))
+			tracks.append(Track(track, self.get_client_id_param(True)))
 		u.close()
 		return tracks
 

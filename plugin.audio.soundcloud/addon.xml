@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<addon id="plugin.audio.soundcloud2" version="0.0.1" name="Soundcloud" provider-name="gryevns"> 
+	<requires>
+		<import addon="xbmc.gui"/>
+		<import addon="xbmc.plugin"/>
+	</requires>
+	<extension point="xbmc.python.pluginsource" library="main.py">
+		<provides>audio</provides>
+	</extension>
+	<extension point="xbmc.addon.metadata">
+		<summary>Addon to allow access to Public data on Soundcloud.</summary>
+		<description>desc</description>
+		<platform>all</platform>
+	</extension>
+</addon>
