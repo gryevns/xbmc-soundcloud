@@ -33,11 +33,40 @@ def get_favorites(params):
         xbmcplugin.addDirectoryItem(handle=HANDLE, url=url, listitem=li, isFolder=False)
     xbmcplugin.endOfDirectory(handle=HANDLE, succeeded=True)
 
+def get_playlists(params):
+    client = SoundCloudClient(username)
+    playlists = client.get_playlists()
+    for playlist in playlists:
+        artwork = playlist.get_artwork_url() if playlist.get_artwork_url() else ""
+        li = ListItem(label=playlist.get_title())
+        li.setInfo("music", { "title": playlist.get_title(), "genre": playlist.get_genre() })
+        li.setIconImage(artwork)
+        li.setThumbnailImage(artwork)
+        li.setProperty("IsPlayable", "false")
+        url = "%s%d/" % (URL, playlist.get_id())
+        xbmcplugin.addDirectoryItem(handle=HANDLE, url=url, listitem=li, isFolder=True)
+    xbmcplugin.endOfDirectory(handle=HANDLE, succeeded=True)
+
+def get_playlist(params):
+    client = SoundCloudClient(username)
+    playlist = client.get_playlist(params['id'])
+    for track in playlist.get_tracks():
+        artwork = track.get_artwork_url() if track.get_artwork_url() else ""
+        li = ListItem(label=track.get_title())
+        li.setInfo("music", { "title": track.get_title(), "genre": track.get_genre() })
+        li.setIconImage(artwork)
+        li.setThumbnailImage(artwork)
+        li.setProperty("mimetype", "audio/mpeg")
+        li.setProperty("IsPlayable", "true")
+        url = track.get_stream_url()
+        xbmcplugin.addDirectoryItem(handle=HANDLE, url=url, listitem=li, isFolder=False)
+    xbmcplugin.endOfDirectory(handle=HANDLE, succeeded=True)
+
 patterns = [
     Pattern(r"^/$", get_menu),
     Pattern(r"^/favorites/$", get_favorites),
-    #TODO
-    Pattern(r"^/playlists/$", None)
+    Pattern(r"^/playlists/$", get_playlists),
+    Pattern(r"^/playlists/(?P<id>\d+)/$", get_playlist)
 ]
 
 # Require username
