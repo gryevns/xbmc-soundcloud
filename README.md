@@ -1,4 +1,4 @@
-xbmc-soundcloud
+xbmc-soundcloudstream
 ===============
 
 Stream favorite tracks and public playlists from your SoundCloud&reg; account.
